@@ -6,11 +6,6 @@ import useAxios from "../hooks/useAxios";
 
 const TodoList: React.FC = () => {
     const { id } = useParams();
-    const { data, error, loaded } = useAxios<GetTodoItemsResponse>(
-        `items/${id}/lists`,
-        "GET",
-        null
-    );
 
     return (
         <Header />

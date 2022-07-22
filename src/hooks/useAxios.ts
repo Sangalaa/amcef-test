@@ -1,47 +1,56 @@
-import { AxiosError } from "axios";
-import { useEffect, useRef, useState } from "react";
+import { AxiosError, AxiosRequestConfig } from "axios";
+import { useEffect, useState } from "react";
 import api from "../libs/axios";
 
 type UseAxios<ResponseType> = {
-    cancel: () => void;
+    axiosFetch: (
+        url: string,
+        method: string,
+        requestConfig: object
+    ) => Promise<ResponseType | null | undefined>;
     data: ResponseType | null;
     error: AxiosError | null;
-    loaded: boolean
+    loaded: boolean;
 };
 
-const useAxios = <ResponseType>(
-    url: string,
-    method: string,
-    payload: any
-): UseAxios<ResponseType> => {
+const useAxios = <ResponseType>(): UseAxios<ResponseType> => {
     const [data, setData] = useState<ResponseType | null>(null);
     const [error, setError] = useState<AxiosError | null>(null);
     const [loaded, setLoaded] = useState<boolean>(false);
+    const [controller, setController] = useState<AbortController | null>(null);
 
-    const controllerRef = useRef(new AbortController());
+    const axiosFetch = async (
+        url: string,
+        method: string,
+        requestConfig: object = {}
+    ) => {
+        const controller = new AbortController();
+        setController(controller);
 
-    const cancel = () => controllerRef.current.abort();
+        try {
+            const response = await api.request<ResponseType>({
+                data: requestConfig,
+                signal: controller.signal,
+                method,
+                url,
+            });
+
+            setData(response.data);
+
+            return response.data;
+        } catch (error: any) {
+            setError(error);
+            return error
+        } finally {
+            setLoaded(true);
+        }
+    };
 
     useEffect(() => {
-        (async () => {
-            try {
-                const response = await api.request<ResponseType>({
-                    data: payload,
-                    signal: controllerRef.current.signal,
-                    method,
-                    url,
-                });
+        return () => controller?.abort();
+    }, [controller]);
 
-                setData(response.data);
-            } catch (error: any) {
-                setError(error);
-            } finally {
-                setLoaded(true);
-            }
-        })();
-    }, []);
-
-    return { cancel, data, error, loaded };
+    return { data, error, loaded, axiosFetch };
 };
 
-export default useAxios
+export default useAxios;

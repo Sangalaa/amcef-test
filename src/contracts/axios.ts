@@ -15,3 +15,5 @@ export interface TodoItem {
 
 export type GetTodoListsResponse = TodoList[]
 export type GetTodoItemsResponse = TodoItem[]
+
+export type PostTodoListResponse = TodoList

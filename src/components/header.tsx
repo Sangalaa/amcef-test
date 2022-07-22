@@ -14,7 +14,7 @@ const Logo = styled(({ children, ...props }) => (
 const Header: React.FC = () => {
     return (
         <AppBar component="nav">
-            <Container maxWidth="xl">
+            <Container maxWidth="lg">
                 <Toolbar disableGutters>
                     <Logo>Todo App</Logo>
                 </Toolbar>
