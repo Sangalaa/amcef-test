@@ -15,6 +15,7 @@
     "react-dom": "latest",
     "react-redux": "^8.0.2",
     "react-scripts": "latest",
+    "redux": "^4.2.0",
     "styled-components": "latest"
   },
   "scripts": {
