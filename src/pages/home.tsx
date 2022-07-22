@@ -4,16 +4,21 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/header";
 import { default as TodoListComponent } from "../components/todoList";
+import { GetTodoListsResponse, TodoList } from "../contracts/axios";
 import useAxios from "../hooks/useAxios";
 import { RootState } from "../store";
-import { TodoList, todoListActions } from "../store/todoList-slice";
+import { todoListActions } from "../store/todoList-slice";
 
 const Home: React.FC = () => {
     const dispatch = useDispatch();
     const todoLists = useSelector<RootState>(
         (state) => state.todoList.lists
     ) as TodoList[];
-    const { data, loaded, error } = useAxios("items", "GET", null);
+    const { data, loaded, error } = useAxios<GetTodoListsResponse>(
+        "items",
+        "GET",
+        null
+    );
 
     useEffect(() => {
         if (loaded && data) dispatch(todoListActions.setTodoLists(data));
@@ -23,7 +28,10 @@ const Home: React.FC = () => {
         <>
             <Header />
 
-            <Container maxWidth="lg" sx={(theme) => ({marginTop: theme.spacing(15)})}>
+            <Container
+                maxWidth="lg"
+                sx={(theme) => ({ marginTop: theme.spacing(15) })}
+            >
                 <Grid
                     container
                     spacing={5}

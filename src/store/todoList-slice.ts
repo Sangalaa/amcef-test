@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-export interface TodoList {
-    id: number;
-    title: string;
-}
+import { TodoList } from "../contracts/axios";
 
 interface TodoListState {
     lists: TodoList[];
