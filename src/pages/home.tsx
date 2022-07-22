@@ -17,6 +17,7 @@ const Home: React.FC = () => {
     const handleCloseModal = () => setOpen(false);
 
     const dispatch = useDispatch()
+    const { enqueueSnackbar } = useSnackbar()
 
     const todoLists = useSelector<RootState>(
         (state) => state.todoList.lists
@@ -27,6 +28,8 @@ const Home: React.FC = () => {
     useEffect(() => {
         axiosFetch("items", "GET", {}).then((data) => {
             dispatch(todoListActions.setTodoLists(data));
+        }).catch(() => {
+            enqueueSnackbar("Nastala neočakávaná chyba pri sťahovaní údajov zo servera", { variant: "error" });
         });
     }, []);
 
