@@ -1,5 +1,6 @@
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import { Container } from "@mui/system";
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddTodoForm from "../components/addTodoForm";
@@ -15,7 +16,7 @@ const Home: React.FC = () => {
     const handleOpenModal = () => setOpen(true);
     const handleCloseModal = () => setOpen(false);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const todoLists = useSelector<RootState>(
         (state) => state.todoList.lists
@@ -24,9 +25,9 @@ const Home: React.FC = () => {
     const { axiosFetch } = useAxios<GetTodoListsResponse>();
 
     useEffect(() => {
-        axiosFetch("items", "GET", {}).then((data) =>
-            dispatch(todoListActions.setTodoLists(data))
-        );
+        axiosFetch("items", "GET", {}).then((data) => {
+            dispatch(todoListActions.setTodoLists(data));
+        });
     }, []);
 
     return (

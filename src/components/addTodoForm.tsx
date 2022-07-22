@@ -1,5 +1,6 @@
-import { TextField, Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
+import { useSnackbar } from "notistack";
 import { useDispatch } from "react-redux";
 import { object, string } from "yup";
 import { PostTodoListResponse } from "../contracts/axios";
@@ -15,15 +16,26 @@ const validationSchema = object({
 });
 
 const AddTodoForm: React.FC = () => {
-    const { axiosFetch } = useAxios<PostTodoListResponse>()
+    const { axiosFetch } = useAxios<PostTodoListResponse>();
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleSubmit = async (values: Fields) => {
-       const todoList = await axiosFetch("items", "POST", values);
+        try {
+            const todoList = await axiosFetch("items", "POST", values)
 
-       dispatch(todoListActions.addTodoList(todoList))
-       formik.resetForm()
+            dispatch(todoListActions.addTodoList(todoList));
+
+            enqueueSnackbar(`Todo list ${todoList?.title} bol úspešne pridaný`, {
+                variant: "success",
+            });
+        }
+        catch(error) {
+            enqueueSnackbar("Nastala neočakávaná chyba", { variant: "error" });
+        }
+
+        formik.resetForm();
     };
 
     const formik = useFormik({

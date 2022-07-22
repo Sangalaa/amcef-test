@@ -7,7 +7,7 @@ type UseAxios<ResponseType> = {
         url: string,
         method: string,
         requestConfig: object
-    ) => Promise<ResponseType | null | undefined>;
+    ) => Promise<ResponseType>;
     data: ResponseType | null;
     error: AxiosError | null;
     loaded: boolean;
@@ -37,10 +37,10 @@ const useAxios = <ResponseType>(): UseAxios<ResponseType> => {
 
             setData(response.data);
 
-            return response.data;
+            return Promise.resolve(response.data);
         } catch (error: any) {
             setError(error);
-            return error
+            return Promise.reject(error)
         } finally {
             setLoaded(true);
         }

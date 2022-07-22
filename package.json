@@ -12,6 +12,7 @@
     "@testing-library/user-event": "latest",
     "axios": "^0.27.2",
     "formik": "^2.2.9",
+    "notistack": "^2.0.5",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "^8.0.2",
