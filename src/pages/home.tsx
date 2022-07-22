@@ -3,6 +3,7 @@ import { Container } from "@mui/system";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import AddTodoForm from "../components/addTodoForm";
 import Header from "../components/header";
 import { default as TodoListComponent } from "../components/todoList";
@@ -15,6 +16,7 @@ const Home: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
     const handleOpenModal = () => setOpen(true);
     const handleCloseModal = () => setOpen(false);
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
     const { enqueueSnackbar } = useSnackbar()
@@ -69,6 +71,7 @@ const Home: React.FC = () => {
                                 <TodoListComponent
                                     key={todoList.id}
                                     title={todoList.title}
+                                    handleOnClick={() => navigate(`list/${todoList.id}`)}
                                 />
                             </Grid>
                         ))}
