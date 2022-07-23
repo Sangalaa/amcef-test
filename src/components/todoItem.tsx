@@ -76,7 +76,11 @@ const TodoItem: React.FC<TodoItemProps> = ({
     };
 
     return (
-        <Card>
+        <Card
+            sx={{
+                backgroundColor: done ? "#e3f2fd" : null,
+            }}
+        >
             <CardContent>
                 <Typography gutterBottom variant="h6" component="h2">
                     {title}
@@ -92,14 +96,19 @@ const TodoItem: React.FC<TodoItemProps> = ({
                 }}
             >
                 <Box
-                    sx={{
+                    sx={(theme) => ({
                         display: "flex",
                         alignItems: "center",
                         justifyItems: "center",
-                    }}
+                        padding: theme.spacing(1),
+                    })}
                 >
                     <AccessAlarmIcon />
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={(theme) => ({ marginLeft: theme.spacing(1) })}
+                    >
                         {deadline.toLocaleString()}
                     </Typography>
                 </Box>

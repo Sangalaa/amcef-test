@@ -6,6 +6,17 @@ interface TodoListState {
     items: TodoItem[];
 }
 
+const sortTodoItems = (a: TodoItem, b: TodoItem) => {
+    const aDate = Date.parse(a.deadline)
+    const bDate = Date.parse(b.deadline)
+
+    if (a.done === b.done) {
+        return aDate - bDate
+    }
+    
+    return a.done === false ? -1 : 1
+}
+
 const todoListSlice = createSlice({
     name: "todoList",
     initialState: { lists: [], items: [] } as TodoListState,
@@ -18,10 +29,11 @@ const todoListSlice = createSlice({
         },
         setTodoItems(state, action) {
             state.items = action.payload;
+            state.items.sort(sortTodoItems);
         },
         addTodoItem(state, action) {
             state.items.push(action.payload);
-            state.items.sort((a, b) => Date.parse(a.deadline) - Date.parse(b.deadline))
+            state.items.sort(sortTodoItems);
         },
         updateTodoItemStatus(state, action) {
             const todoItem = state.items.find(
@@ -30,6 +42,7 @@ const todoListSlice = createSlice({
 
             if (todoItem) {
                 todoItem.done = action.payload.done;
+                state.items.sort(sortTodoItems);
             }
         },
         removeTodoItem(state, action) {
