@@ -1,12 +1,13 @@
 export interface TodoList {
-    id: number;
+    id: string;
     title: string;
 }
 
 export interface TodoItem {
-    id: number;
-    itemId: number
+    id: string;
+    itemId: string
     title: string;
+    description: string;
     done: boolean
     deadline: string
     createdAt: string
@@ -17,3 +18,4 @@ export type GetTodoListsResponse = TodoList[]
 export type GetTodoItemsResponse = TodoItem[]
 
 export type PostTodoListResponse = TodoList
+export type PostTodoListItemResponse = TodoList

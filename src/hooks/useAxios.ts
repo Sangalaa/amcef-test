@@ -1,4 +1,4 @@
-import { AxiosError, AxiosRequestConfig } from "axios";
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import api from "../libs/axios";
 
@@ -6,7 +6,8 @@ type UseAxios<ResponseType> = {
     axiosFetch: (
         url: string,
         method: string,
-        requestConfig: object
+        data?: object,
+        params?: object
     ) => Promise<ResponseType>;
     data: ResponseType | null;
     error: AxiosError | null;
@@ -22,14 +23,16 @@ const useAxios = <ResponseType>(): UseAxios<ResponseType> => {
     const axiosFetch = async (
         url: string,
         method: string,
-        requestConfig: object = {}
+        data: object = {},
+        params: object = { sortBy: "createdAt", order: "desc" }
     ) => {
         const controller = new AbortController();
         setController(controller);
 
         try {
             const response = await api.request<ResponseType>({
-                data: requestConfig,
+                data,
+                params,
                 signal: controller.signal,
                 method,
                 url,
@@ -40,7 +43,7 @@ const useAxios = <ResponseType>(): UseAxios<ResponseType> => {
             return Promise.resolve(response.data);
         } catch (error: any) {
             setError(error);
-            return Promise.reject(error)
+            return Promise.reject(error);
         } finally {
             setLoaded(true);
         }
