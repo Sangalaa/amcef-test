@@ -2,12 +2,14 @@ import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import api from "../libs/axios";
 
+export type AxiosConfig = { [key: string]: any }
+
 type UseAxios<ResponseType> = {
     axiosFetch: (
         url: string,
         method: string,
-        data?: object,
-        params?: object
+        data?: AxiosConfig,
+        params?: AxiosConfig
     ) => Promise<ResponseType>;
     data: ResponseType | null;
     error: AxiosError | null;
@@ -23,8 +25,8 @@ const useAxios = <ResponseType>(): UseAxios<ResponseType> => {
     const axiosFetch = async (
         url: string,
         method: string,
-        data: object = {},
-        params: object = { sortBy: "createdAt", order: "desc" }
+        data: AxiosConfig = {},
+        params: AxiosConfig = { sortBy: "createdAt", order: "desc" }
     ) => {
         const controller = new AbortController();
         setController(controller);
