@@ -68,9 +68,8 @@ const Home: React.FC = () => {
                         spacing={5}
                     >
                         {todoLists.map((todoList) => (
-                            <Grid item xs={12} sm={4} md={4}>
+                            <Grid key={todoList.id} item xs={12} sm={4} md={4}>
                                 <TodoListComponent
-                                    key={todoList.id}
                                     title={todoList.title}
                                     handleOnClick={() =>
                                         navigate(`list/${todoList.id}`)
