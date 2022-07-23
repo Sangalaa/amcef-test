@@ -1,4 +1,6 @@
 import { Container, Grid, Paper, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {  useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import AddTodoItemForm from "../components/addTodoItemForm";
@@ -7,13 +9,20 @@ import TodoItemSearch from "../components/todoItemSearch";
 import { TodoItem } from "../contracts/axios";
 import Layout from "../layouts/layout";
 import { RootState } from "../store";
+import { todoListActions } from "../store/todoList-slice";
 
 const TodoList: React.FC = () => {
     const { id } = useParams();
 
+    const dispatch = useDispatch()
+
     const todoItems = useSelector<RootState>(
         (state) => state.todoList.items
     ) as TodoItem[];
+
+    useEffect(() => {
+        dispatch(todoListActions.setTodoItems([]))
+    }, [])
 
     return (
         <Layout>
