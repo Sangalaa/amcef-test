@@ -14,20 +14,19 @@ const todoListSlice = createSlice({
             state.lists = action.payload;
         },
         addTodoList(state, action) {
-            state.lists.push(action.payload);
+            state.lists.unshift(action.payload);
         },
         setTodoItems(state, action) {
             state.items = action.payload;
         },
         addTodoItem(state, action) {
             state.items.push(action.payload);
+            state.items.sort((a, b) => Date.parse(a.deadline) - Date.parse(b.deadline))
         },
         updateTodoItemStatus(state, action) {
             const todoItem = state.items.find(
                 (item) => item.id === action.payload.id
             );
-
-            console.log(todoItem);
 
             if (todoItem) {
                 todoItem.done = action.payload.done;

@@ -25,7 +25,12 @@ const TodoList: React.FC = () => {
     const todoItems = useSelector<RootState>((state) => state.todoList.items) as TodoItem[];
 
     useEffect(() => {
-        axiosFetch(`items/${id}/lists`, "GET", {})
+        axiosFetch(
+            `items/${id}/lists`,
+            "GET",
+            {},
+            { sortBy: "deadline", order: "asc" }
+        )
             .then((data) => {
                 dispatch(todoListActions.setTodoItems(data));
             })

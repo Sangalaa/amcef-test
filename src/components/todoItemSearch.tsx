@@ -9,6 +9,8 @@ import SearchTextField from "./searchTextField";
 type SearchParams = {
     search?: string;
     done?: string;
+    sortBy: string;
+    order: string;
 };
 
 interface TodoItemSearchProps {
@@ -16,12 +18,17 @@ interface TodoItemSearchProps {
 }
 
 const TodoItemSearch: React.FC<TodoItemSearchProps> = ({ todoListId }) => {
-    const [searchParams, setSearchParams] = useState<SearchParams>({});
+    const [searchParams, setSearchParams] = useState<SearchParams>({
+        sortBy: "deadline",
+        order: "asc",
+    });
     const { axiosFetch } = useAxios<TodoItem[]>();
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if(searchParams.search === undefined) return
+        
         axiosFetch(`items/${todoListId}/lists`, "GET", {}, searchParams).then(
             (todoItems) => dispatch(todoListActions.setTodoItems(todoItems))
         );

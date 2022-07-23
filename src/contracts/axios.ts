@@ -1,6 +1,7 @@
 export interface TodoList {
     id: string;
     title: string;
+    createdAt: string
 }
 
 export interface TodoItem {
