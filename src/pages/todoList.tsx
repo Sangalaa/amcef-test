@@ -1,64 +1,57 @@
-import {
-    Container,
-    Grid,
-} from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Container, Grid, Paper, Typography } from "@mui/material";
+import {  useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Header from "../components/header";
-import { GetTodoItemsResponse, TodoItem } from "../contracts/axios";
-import useAxios from "../hooks/useAxios";
-import { RootState } from "../store";
-import { todoListActions } from "../store/todoList-slice";
-import {default as TodoItemComponent} from "../components/todoItem";
 import AddTodoItemForm from "../components/addTodoItemForm";
+import { default as TodoItemComponent } from "../components/todoItem";
 import TodoItemSearch from "../components/todoItemSearch";
+import { TodoItem } from "../contracts/axios";
 import Layout from "../layouts/layout";
+import { RootState } from "../store";
 
 const TodoList: React.FC = () => {
     const { id } = useParams();
-    const { axiosFetch } = useAxios<GetTodoItemsResponse>();
-    const { enqueueSnackbar } = useSnackbar();
 
-    const dispatch = useDispatch();
-
-    const todoItems = useSelector<RootState>((state) => state.todoList.items) as TodoItem[];
-
-    useEffect(() => {
-        axiosFetch(
-            `items/${id}/lists`,
-            "GET",
-            {},
-            { sortBy: "deadline", order: "asc" }
-        )
-            .then((data) => {
-                dispatch(todoListActions.setTodoItems(data));
-            })
-            .catch(() =>
-                enqueueSnackbar(
-                    "Nastala neočakávaná chyba pri sťahovaní todo itemov",
-                    { variant: "error" }
-                )
-            );
-    }, [id]);
+    const todoItems = useSelector<RootState>(
+        (state) => state.todoList.items
+    ) as TodoItem[];
 
     return (
         <Layout>
             <Container
                 maxWidth="lg"
                 component="main"
-                sx={(theme) => ({ marginTop: theme.spacing(10) })}
+                sx={(theme) => ({ marginTop: theme.spacing(15) })}
             >
+                <Typography variant="h3" align="center" component="h2">
+                    Todo itemy
+                </Typography>
+
                 {/* new item form */}
-                <AddTodoItemForm todoListId={id as string} />
+                <Paper
+                    elevation={0}
+                    component="section"
+                    sx={(theme) => ({
+                        marginTop: theme.spacing(5),
+                    })}
+                >
+                    <AddTodoItemForm todoListId={id as string} />
+                </Paper>
 
                 {/* search with filters */}
-                <TodoItemSearch todoListId={id as string} />
+                <Paper
+                    elevation={0}
+                    component="section"
+                    sx={(theme) => ({
+                        marginTop: theme.spacing(5),
+                    })}
+                >
+                    <TodoItemSearch todoListId={id as string} />
+                </Paper>
 
                 {/* list of items */}
                 <Grid
                     container
+                    component="section"
                     alignItems="center"
                     justifyContent="center"
                     spacing={5}

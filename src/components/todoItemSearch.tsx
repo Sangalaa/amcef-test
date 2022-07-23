@@ -1,3 +1,5 @@
+import { Box, Grid } from "@mui/material";
+import { useSnackbar } from "notistack";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { TodoItem } from "../contracts/axios";
@@ -24,15 +26,22 @@ const TodoItemSearch: React.FC<TodoItemSearchProps> = ({ todoListId }) => {
     });
     const { axiosFetch } = useAxios<TodoItem[]>();
 
+    const { enqueueSnackbar } = useSnackbar()
+
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(searchParams.search === undefined) return
-        
-        axiosFetch(`items/${todoListId}/lists`, "GET", {}, searchParams).then(
-            (todoItems) => dispatch(todoListActions.setTodoItems(todoItems))
-        );
-    }, [searchParams]);
+        axiosFetch(`items/${todoListId}/lists`, "GET", {}, searchParams)
+            .then((todoItems) =>
+                dispatch(todoListActions.setTodoItems(todoItems))
+            )
+            .catch(() =>
+                enqueueSnackbar(
+                    "Nastala neočakávaná chyba pri sťahovaní todo itemov",
+                    { variant: "error" }
+                )
+            );
+    }, [searchParams, todoListId]);
 
     const handleFilterChip = (name: string, value: string) => {
         const newValue = searchParams.done === value ? undefined : value;
@@ -51,7 +60,7 @@ const TodoItemSearch: React.FC<TodoItemSearchProps> = ({ todoListId }) => {
         }));
 
     return (
-        <>
+        <Box>
             <SearchTextField
                 id="search"
                 name="search"
@@ -60,22 +69,28 @@ const TodoItemSearch: React.FC<TodoItemSearchProps> = ({ todoListId }) => {
                 onChange={handleSearchChange}
             />
 
-            <FilterChip
-                name="done"
-                label="Dokončené"
-                onClick={handleFilterChip}
-                active={searchParams.done === "true"}
-                value="true"
-            />
+            <Grid container columnGap={1} sx={(theme) => ({ marginTop: theme.spacing(1) })}>
+                <Grid item>
+                    <FilterChip
+                        name="done"
+                        label="Dokončené"
+                        onClick={handleFilterChip}
+                        active={searchParams.done === "true"}
+                        value="true"
+                    />
+                </Grid>
 
-            <FilterChip
-                name="done"
-                label="Nedokončené"
-                onClick={handleFilterChip}
-                active={searchParams.done === "false"}
-                value="false"
-            />
-        </>
+                <Grid item>
+                    <FilterChip
+                        name="done"
+                        label="Nedokončené"
+                        onClick={handleFilterChip}
+                        active={searchParams.done === "false"}
+                        value="false"
+                    />
+                </Grid>
+            </Grid>
+        </Box>
     );
 };
 
