@@ -9,13 +9,11 @@ import Header from "../components/header";
 import { default as TodoListComponent } from "../components/todoList";
 import { GetTodoListsResponse, TodoList } from "../contracts/axios";
 import useAxios from "../hooks/useAxios";
+import Layout from "../layouts/layout";
 import { RootState } from "../store";
 import { todoListActions } from "../store/todoList-slice";
 
 const Home: React.FC = () => {
-    const [open, setOpen] = useState<boolean>(false);
-    const handleOpenModal = () => setOpen(true);
-    const handleCloseModal = () => setOpen(false);
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
@@ -36,13 +34,11 @@ const Home: React.FC = () => {
     }, []);
 
     return (
-        <>
-            <Header />
-
+        <Layout>
             <Container
                 maxWidth="lg"
                 sx={(theme) => ({ marginTop: theme.spacing(15) })}
-                component="section"
+                component="main"
             >
                 <Typography variant="h3" align="center" component="h2">
                     Todo zoznamy
@@ -56,9 +52,6 @@ const Home: React.FC = () => {
                     })}
                     elevation={0}
                 >
-                    <Button fullWidth onClick={handleOpenModal}>
-                        Nový zoznam
-                    </Button>
                     <Grid
                         container
                         alignItems="center"
@@ -71,14 +64,16 @@ const Home: React.FC = () => {
                                 <TodoListComponent
                                     key={todoList.id}
                                     title={todoList.title}
-                                    handleOnClick={() => navigate(`list/${todoList.id}`)}
+                                    handleOnClick={() =>
+                                        navigate(`list/${todoList.id}`)
+                                    }
                                 />
                             </Grid>
                         ))}
                     </Grid>
                 </Paper>
             </Container>
-        </>
+        </Layout>
     );
 };
 

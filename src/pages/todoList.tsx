@@ -14,6 +14,7 @@ import { todoListActions } from "../store/todoList-slice";
 import {default as TodoItemComponent} from "../components/todoItem";
 import AddTodoItemForm from "../components/addTodoItemForm";
 import TodoItemSearch from "../components/todoItemSearch";
+import Layout from "../layouts/layout";
 
 const TodoList: React.FC = () => {
     const { id } = useParams();
@@ -43,11 +44,10 @@ const TodoList: React.FC = () => {
     }, [id]);
 
     return (
-        <>
-            <Header />
-
+        <Layout>
             <Container
                 maxWidth="lg"
+                component="main"
                 sx={(theme) => ({ marginTop: theme.spacing(10) })}
             >
                 {/* new item form */}
@@ -78,7 +78,7 @@ const TodoList: React.FC = () => {
                     ))}
                 </Grid>
             </Container>
-        </>
+        </Layout>
     );
 };
 
