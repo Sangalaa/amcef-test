@@ -18,3 +18,4 @@ export type GetTodoListsResponse = TodoList[]
 export type GetTodoItemsResponse = TodoItem[]
 
 export type PostTodoListResponse = TodoList
+export type PostTodoListItemResponse = TodoList

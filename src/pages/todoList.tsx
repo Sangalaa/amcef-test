@@ -1,12 +1,6 @@
 import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
     Container,
     Grid,
-    IconButton,
-    Typography,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect } from "react";
@@ -17,11 +11,8 @@ import { GetTodoItemsResponse, TodoItem } from "../contracts/axios";
 import useAxios from "../hooks/useAxios";
 import { RootState } from "../store";
 import { todoListActions } from "../store/todoList-slice";
-import DeleteIcon from "@mui/icons-material/Delete";
-import DoneIcon from "@mui/icons-material/Done";
-import ReplayIcon from "@mui/icons-material/Replay";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import {default as TodoItemComponent} from "../components/todoItem";
+import AddTodoItemForm from "../components/addTodoItemForm";
 
 const TodoList: React.FC = () => {
     const { id } = useParams();
@@ -49,7 +40,14 @@ const TodoList: React.FC = () => {
         <>
             <Header />
 
-            <Container maxWidth="lg">
+            <Container
+                maxWidth="lg"
+                sx={(theme) => ({ marginTop: theme.spacing(10) })}
+            >
+                {/* new item form */}
+                <AddTodoItemForm todoListId={id as string} />
+
+                {/* list of items */}
                 <Grid
                     container
                     alignItems="center"
