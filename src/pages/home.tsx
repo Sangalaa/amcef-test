@@ -25,7 +25,7 @@ const Home: React.FC = () => {
     const { axiosFetch } = useAxios<GetTodoListsResponse>();
 
     useEffect(() => {
-        axiosFetch("items", "GET", {})
+        axiosFetch("lists", "GET", {})
             .then((data) => {
                 dispatch(todoListActions.setTodoLists(data));
             })

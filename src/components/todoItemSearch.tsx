@@ -31,7 +31,7 @@ const TodoItemSearch: React.FC<TodoItemSearchProps> = ({ todoListId }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axiosFetch(`items/${todoListId}/lists`, "GET", {}, searchParams)
+        axiosFetch(`lists/${todoListId}/items`, "GET", {}, searchParams)
             .then((todoItems) =>
                 dispatch(todoListActions.setTodoItems(todoItems))
             )

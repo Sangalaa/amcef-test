@@ -6,7 +6,7 @@ export interface TodoList {
 
 export interface TodoItem {
     id: string;
-    itemId: string
+    listId: string
     title: string;
     description: string;
     done: boolean

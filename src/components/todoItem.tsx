@@ -39,7 +39,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
     const { enqueueSnackbar } = useSnackbar();
 
     const switchDoneStatus = (done: boolean) => {
-        axiosFetch(`items/${todoListId}/lists/${id}`, "PUT", { done })
+        axiosFetch(`lists/${todoListId}/items/${id}`, "PUT", { done })
             .then(() => {
                 dispatch(todoListActions.updateTodoItemStatus({ done, id }));
                 enqueueSnackbar("Status bol aktualizovaný", {
@@ -61,7 +61,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
     const handleUndone = () => switchDoneStatus(false);
 
     const handleDelete = () => {
-        axiosFetch(`items/${todoListId}/lists/${id}`, "DELETE", {})
+        axiosFetch(`lists/${todoListId}/items/${id}`, "DELETE", {})
             .then(() => {
                 dispatch(todoListActions.removeTodoItem(id));
                 enqueueSnackbar("Todo item bol úspešne vymazaný", {

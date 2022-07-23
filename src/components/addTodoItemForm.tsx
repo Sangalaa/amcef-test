@@ -36,7 +36,7 @@ const AddTodoItemForm: React.FC<AddTodoItemFormProps> = ({ todoListId }) => {
     const handleSubmit = async (values: Fields) => {
         try {
             const todoListItem = await axiosFetch(
-                `items/${todoListId}/lists`,
+                `lists/${todoListId}/items`,
                 "POST",
                 values
             );
