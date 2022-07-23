@@ -13,6 +13,7 @@ import { RootState } from "../store";
 import { todoListActions } from "../store/todoList-slice";
 import {default as TodoItemComponent} from "../components/todoItem";
 import AddTodoItemForm from "../components/addTodoItemForm";
+import TodoItemSearch from "../components/todoItemSearch";
 
 const TodoList: React.FC = () => {
     const { id } = useParams();
@@ -46,6 +47,9 @@ const TodoList: React.FC = () => {
             >
                 {/* new item form */}
                 <AddTodoItemForm todoListId={id as string} />
+
+                {/* search with filters */}
+                <TodoItemSearch todoListId={id as string} />
 
                 {/* list of items */}
                 <Grid
