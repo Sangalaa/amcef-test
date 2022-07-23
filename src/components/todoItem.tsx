@@ -39,7 +39,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
     const { enqueueSnackbar } = useSnackbar();
 
     const switchDoneStatus = (done: boolean) => {
-        axiosFetch(`items/${todoListId}/lists/${id}`, "PUT", { done })
+        axiosFetch(`lists/${todoListId}/items/${id}`, "PUT", { done })
             .then(() => {
                 dispatch(todoListActions.updateTodoItemStatus({ done, id }));
                 enqueueSnackbar("Status bol aktualizovaný", {
@@ -61,7 +61,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
     const handleUndone = () => switchDoneStatus(false);
 
     const handleDelete = () => {
-        axiosFetch(`items/${todoListId}/lists/${id}`, "DELETE", {})
+        axiosFetch(`lists/${todoListId}/items/${id}`, "DELETE", {})
             .then(() => {
                 dispatch(todoListActions.removeTodoItem(id));
                 enqueueSnackbar("Todo item bol úspešne vymazaný", {
@@ -76,7 +76,11 @@ const TodoItem: React.FC<TodoItemProps> = ({
     };
 
     return (
-        <Card>
+        <Card
+            sx={{
+                backgroundColor: done ? "#e3f2fd" : null,
+            }}
+        >
             <CardContent>
                 <Typography gutterBottom variant="h6" component="h2">
                     {title}
@@ -92,14 +96,19 @@ const TodoItem: React.FC<TodoItemProps> = ({
                 }}
             >
                 <Box
-                    sx={{
+                    sx={(theme) => ({
                         display: "flex",
                         alignItems: "center",
                         justifyItems: "center",
-                    }}
+                        padding: theme.spacing(1),
+                    })}
                 >
                     <AccessAlarmIcon />
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={(theme) => ({ marginLeft: theme.spacing(1) })}
+                    >
                         {deadline.toLocaleString()}
                     </Typography>
                 </Box>

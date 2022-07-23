@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
@@ -36,7 +36,7 @@ const AddTodoItemForm: React.FC<AddTodoItemFormProps> = ({ todoListId }) => {
     const handleSubmit = async (values: Fields) => {
         try {
             const todoListItem = await axiosFetch(
-                `items/${todoListId}/lists`,
+                `lists/${todoListId}/items`,
                 "POST",
                 values
             );
@@ -68,57 +68,82 @@ const AddTodoItemForm: React.FC<AddTodoItemFormProps> = ({ todoListId }) => {
     });
 
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <TextField
-                id="title"
-                name="title"
-                label="Názov"
-                value={formik.values.title}
-                onChange={formik.handleChange}
-                error={formik.touched.title && Boolean(formik.errors.title)}
-                helperText={formik.touched.title && formik.errors.title}
-            />
-            <TextField
-                id="description"
-                name="description"
-                label="Popis úlohy"
-                value={formik.values.description}
-                onChange={formik.handleChange}
-                error={
-                    formik.touched.description &&
-                    Boolean(formik.errors.description)
-                }
-                helperText={
-                    formik.touched.description && formik.errors.description
-                }
-            />
-            <DateTimePicker
-                disablePast
-                label="Termín splnenia úlohy"
-                value={formik.values.deadline}
-                onChange={(value) =>
-                    formik.setFieldValue("deadline", value, true)
-                }
-                renderInput={(params: any) => (
-                    <TextField
-                        {...params}
-                        id="deadline"
-                        name="deadline"
-                        error={
-                            formik.touched.deadline &&
-                            Boolean(formik.errors.deadline)
-                        }
-                        helperText={
-                            formik.touched.deadline && formik.errors.deadline
-                        }
-                        onChange={formik.handleChange}
-                    />
-                )}
-            />
-            <Button color="primary" variant="outlined" type="submit">
-                Pridaj
-            </Button>
-        </form>
+        <Grid
+            container
+            component="form"
+            spacing={2}
+            alignItems="start"
+            justifyContent="center"
+            onSubmit={formik.handleSubmit}
+        >
+            <Grid item xs={12} md={3}>
+                <TextField
+                    id="title"
+                    name="title"
+                    label="Názov"
+                    fullWidth
+                    value={formik.values.title}
+                    onChange={formik.handleChange}
+                    error={formik.touched.title && Boolean(formik.errors.title)}
+                    helperText={formik.touched.title && formik.errors.title}
+                />
+            </Grid>
+            <Grid item xs={12} md={3}>
+                <TextField
+                    id="description"
+                    name="description"
+                    label="Popis úlohy"
+                    fullWidth
+                    value={formik.values.description}
+                    onChange={formik.handleChange}
+                    error={
+                        formik.touched.description &&
+                        Boolean(formik.errors.description)
+                    }
+                    helperText={
+                        formik.touched.description && formik.errors.description
+                    }
+                />
+            </Grid>
+            <Grid item xs={12} md={3}>
+                <DateTimePicker
+                    disablePast
+                    label="Termín splnenia úlohy"
+                    value={formik.values.deadline}
+                    onChange={(value) =>
+                        formik.setFieldValue("deadline", value, true)
+                    }
+                    renderInput={(params: any) => (
+                        <TextField
+                            {...params}
+                            id="deadline"
+                            fullWidth
+                            name="deadline"
+                            error={
+                                formik.touched.deadline &&
+                                Boolean(formik.errors.deadline)
+                            }
+                            helperText={
+                                formik.touched.deadline &&
+                                formik.errors.deadline
+                            }
+                            onChange={formik.handleChange}
+                        />
+                    )}
+                />
+            </Grid>
+            <Grid item xs={12} md={3}>
+                <Button
+                    fullWidth
+                    sx={{ height: "56px" }}
+                    color="primary"
+                    variant="outlined"
+                    type="submit"
+                >
+                    Pridaj
+                </Button>
+            </Grid>
+        </Grid>
     );
 };
 

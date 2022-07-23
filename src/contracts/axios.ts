@@ -1,11 +1,12 @@
 export interface TodoList {
     id: string;
     title: string;
+    createdAt: string
 }
 
 export interface TodoItem {
     id: string;
-    itemId: string
+    listId: string
     title: string;
     description: string;
     done: boolean

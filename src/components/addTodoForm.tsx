@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, Paper, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
 import { useDispatch } from "react-redux";
@@ -23,15 +23,17 @@ const AddTodoForm: React.FC = () => {
 
     const handleSubmit = async (values: Fields) => {
         try {
-            const todoList = await axiosFetch("items", "POST", values)
+            const todoList = await axiosFetch("items", "POST", values);
 
             dispatch(todoListActions.addTodoList(todoList));
 
-            enqueueSnackbar(`Todo list ${todoList?.title} bol úspešne pridaný`, {
-                variant: "success",
-            });
-        }
-        catch(error) {
+            enqueueSnackbar(
+                `Todo list ${todoList?.title} bol úspešne pridaný`,
+                {
+                    variant: "success",
+                }
+            );
+        } catch (error) {
             enqueueSnackbar("Nastala neočakávaná chyba", { variant: "error" });
         }
 
@@ -49,20 +51,30 @@ const AddTodoForm: React.FC = () => {
     });
 
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <Paper
+            elevation={0}
+            component="form"
+            onSubmit={formik.handleSubmit}
+            sx={{
+                display: "flex",
+                alignItems: "start",
+            }}
+        >
             <TextField
                 id="title"
                 name="title"
                 label="Názov"
+                variant="standard"
+                sx={{ flex: 1 }}
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 error={formik.touched.title && Boolean(formik.errors.title)}
                 helperText={formik.touched.title && formik.errors.title}
             />
-            <Button color="primary" variant="outlined" type="submit">
+            <Button color="primary" variant="outlined" type="submit" sx={(theme) => ({marginLeft: theme.spacing(1), height: '48px'})}>
                 Pridaj
             </Button>
-        </form>
+        </Paper>
     );
 };
 
