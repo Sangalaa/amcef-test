@@ -9,7 +9,7 @@ import FilterChip from "./filterChip";
 import SearchTextField from "./searchTextField";
 
 type SearchParams = {
-    search?: string;
+    title?: string;
     done?: string;
     sortBy: string;
     order: string;
@@ -56,7 +56,7 @@ const TodoItemSearch: React.FC<TodoItemSearchProps> = ({ todoListId }) => {
     ) =>
         setSearchParams((value) => ({
             ...value,
-            search: e.target.value,
+            title: e.target.value,
         }));
 
     return (

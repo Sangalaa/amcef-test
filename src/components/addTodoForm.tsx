@@ -23,7 +23,7 @@ const AddTodoForm: React.FC = () => {
 
     const handleSubmit = async (values: Fields) => {
         try {
-            const todoList = await axiosFetch("items", "POST", values);
+            const todoList = await axiosFetch("lists", "POST", values);
 
             dispatch(todoListActions.addTodoList(todoList));
 
