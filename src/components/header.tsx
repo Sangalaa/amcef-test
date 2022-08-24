@@ -16,7 +16,7 @@ const Header: React.FC = () => {
         <AppBar component="nav">
             <Container maxWidth="lg">
                 <Toolbar disableGutters>
-                    <Logo>Todo App</Logo>
+                    <Logo data-testid="logo">Todo App</Logo>
                 </Toolbar>
             </Container>
         </AppBar>

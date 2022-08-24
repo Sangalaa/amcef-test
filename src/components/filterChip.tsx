@@ -9,10 +9,11 @@ interface FilterChipProps {
     value: string;
 }
 
-const FilterChip: React.FC<FilterChipProps> = (({ name, value, label, onClick, active }) => {
+const FilterChip: React.FC<FilterChipProps> = (({ name, value, label, onClick, active, ...props }) => {
     const handleClick = () => onClick(name, value)
     return (
         <Chip
+            {...props}
             icon={active ? <DoneIcon /> : undefined}
             color={active ? "primary" : "default"}
             variant="outlined"

@@ -71,6 +71,7 @@ const AddTodoItemForm: React.FC<AddTodoItemFormProps> = ({ todoListId }) => {
         <Grid
             container
             component="form"
+            data-testid="addTodoListItemForm"
             spacing={2}
             alignItems="start"
             justifyContent="center"
@@ -81,6 +82,7 @@ const AddTodoItemForm: React.FC<AddTodoItemFormProps> = ({ todoListId }) => {
                     id="title"
                     name="title"
                     label="Názov"
+                    data-testid="addTodoListItemForm-input-title"
                     fullWidth
                     value={formik.values.title}
                     onChange={formik.handleChange}
@@ -93,6 +95,7 @@ const AddTodoItemForm: React.FC<AddTodoItemFormProps> = ({ todoListId }) => {
                     id="description"
                     name="description"
                     label="Popis úlohy"
+                    data-testid="addTodoListItemForm-input-description"
                     fullWidth
                     value={formik.values.description}
                     onChange={formik.handleChange}
@@ -119,6 +122,7 @@ const AddTodoItemForm: React.FC<AddTodoItemFormProps> = ({ todoListId }) => {
                             id="deadline"
                             fullWidth
                             name="deadline"
+                            data-testid="addTodoListItemForm-input-deadline"
                             error={
                                 formik.touched.deadline &&
                                 Boolean(formik.errors.deadline)

@@ -80,6 +80,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
             sx={{
                 backgroundColor: done ? "#e3f2fd" : null,
             }}
+            data-testid="todoItem"
         >
             <CardContent>
                 <Typography gutterBottom variant="h6" component="h2">

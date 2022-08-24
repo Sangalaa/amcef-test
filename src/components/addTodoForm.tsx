@@ -65,6 +65,7 @@ const AddTodoForm: React.FC = () => {
                 name="title"
                 label="Názov"
                 variant="standard"
+                data-testid="addTodoForm-input-title"
                 sx={{ flex: 1 }}
                 value={formik.values.title}
                 onChange={formik.handleChange}

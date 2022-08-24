@@ -74,6 +74,7 @@ const TodoItemSearch: React.FC<TodoItemSearchProps> = ({ todoListId }) => {
                     <FilterChip
                         name="done"
                         label="Dokončené"
+                        data-testid="todoItemSearch-chip-done"
                         onClick={handleFilterChip}
                         active={searchParams.done === "true"}
                         value="true"
@@ -84,6 +85,7 @@ const TodoItemSearch: React.FC<TodoItemSearchProps> = ({ todoListId }) => {
                     <FilterChip
                         name="done"
                         label="Nedokončené"
+                        data-testid="todoItemSearch-chip-undone"
                         onClick={handleFilterChip}
                         active={searchParams.done === "false"}
                         value="false"

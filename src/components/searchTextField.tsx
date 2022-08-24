@@ -20,6 +20,7 @@ const SearchTextField: React.FC<SearchTextFieldProps> = ({delay, onChange, ...pr
         <TextField
             {...props}
             fullWidth
+            data-testid="search-input"
             InputProps={{
                 startAdornment: <SearchIcon />,
             }}

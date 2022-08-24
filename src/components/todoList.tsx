@@ -7,7 +7,7 @@ interface TodoListProps {
 
 const TodoList: React.FC<TodoListProps> = ({ title, handleOnClick }) => {
     return (
-        <Card sx={{ width: "100%", height: "200px" }}>
+        <Card sx={{ width: "100%", height: "200px" }} data-testid="todoList">
             <CardActionArea
                 onClick={handleOnClick}
                 sx={{ width: "100%", height: "100%" }}>
